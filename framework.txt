@@ -1,0 +1,32 @@
+choyabot-agent-framework/
+├── README.md
+├── setup.py
+├── requirements.txt
+├── bin/
+│   └── choya                          # CLI 入口脚本
+├── choyabot_agent_framework/
+│   ├── __init__.py
+│   ├── __main__.py                    # python -m choyabot_agent_framework
+│   ├── core/
+│   │   ├── __init__.py
+│   │   ├── agent.py                   # Agent 核心调度
+│   │   ├── skill_registry.py          # Skill 注册表 + 热加载
+│   │   ├── planner.py                 # LLM 任务规划
+│   │   ├── memory.py                  # SQLite 记忆
+│   │   └── context.py                 # 上下文管理
+│   ├── skills/
+│   │   ├── __init__.py
+│   │   └── base_skill.py              # Skill 基类
+│   └── utils/
+│       ├── __init__.py
+│       └── logger.py
+├── config/
+│   └── skills/
+│       ├── navigate.yaml
+│       ├── elevator.yaml
+│       └── arm.yaml
+└── skills/                            # 用户 Skill 目录（运行时自动创建）
+    ├── __init__.py
+    ├── navigate_skill.py
+    ├── elevator_skill.py
+    └── arm_skill.py

@@ -1,0 +1,24 @@
+name: elevator
+version: 1.0.0
+description: 控制电梯系统完成楼层切换操作，支持按上行/下行按钮和前往指定楼层，实现Agent与楼宇设施的联动
+author: reeman
+tags: [elevator, building, floor, navigation]
+
+parameters:
+  action:
+    type: string
+    description: 电梯操作类型，有效取值为 press_up（按上行按钮）、press_down（按下行按钮）、go_floor（前往指定楼层）
+    required: true
+    enum: [press_up, press_down, go_floor]
+  floor:
+    type: string
+    description: 目标楼层编号，仅在 action 为 go_floor 时必填，例如 "3"、"B1"、"15F"
+    required: false
+
+ros:
+  topics:
+    - name: /elevator/command
+      type: std_msgs/String
+      direction: publish
+
+timeout: 15.0

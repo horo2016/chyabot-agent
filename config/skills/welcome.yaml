@@ -1,0 +1,34 @@
+name: welcome
+version: 1.0.1
+description: 智能欢迎系统：检测到新人时播报，持续有人20s冷却，人离开后重置，支持语音控制启停
+author: reeman
+tags: [welcome, greeting, person, voice, tts]
+persistent: true  # 标记为常驻后台
+
+parameters:
+  enabled:
+    type: boolean
+    description: 是否默认启用
+    required: false
+    default: true
+  cooldown:
+    type: number
+    description: 持续有人时的播报间隔（秒）
+    required: false
+    default: 20.0
+  welcome_text:
+    type: string
+    description: 欢迎语，多个用 | 分隔随机轮换
+    required: false
+    default: "欢迎光临弹弓科技|您好，请问有什么可以帮您|欢迎光临，很高兴见到您"
+
+ros:
+  topics:
+    - name: /vision/person_detected
+      type: std_msgs/Bool
+      direction: subscribe
+    - name: /voice/tts_text
+      type: std_msgs/String
+      direction: publish
+
+timeout: 0

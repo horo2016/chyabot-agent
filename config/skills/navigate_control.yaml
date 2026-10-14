@@ -1,0 +1,20 @@
+name: navigate_control
+version: 1.0.0
+description: 导航控制，支持开始(start)、暂停(pause)、停止(stop)当前路径跟踪
+author: reeman
+tags: [navigation, control]
+
+parameters:
+  action:
+    type: string
+    description: 控制指令，可选 start(开始/继续)、pause(暂停)、stop(停止)
+    required: true
+    enum: [start, pause, stop]
+
+ros:
+  topics:
+    - name: /waypoints_control
+      type: std_msgs/String
+      direction: publish
+
+timeout: 5.0

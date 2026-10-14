@@ -1,0 +1,35 @@
+name: arm_elevator
+version: 1.0.0
+description: 控制机械臂按下/抬起电梯面板按钮，支持单步按下、单步抬起和完整点按动作，实现Agent通过操作型机械臂与楼宇电梯联动
+author: reeman
+tags: [arm, manipulator, elevator, button, press]
+
+parameters:
+  action:
+    type: string
+    description: 机械臂操作类型，有效取值为 press（按下并保持）、release（抬起）、press_and_release（点按：按下后自动抬起）
+    required: true
+    enum: [press, release, press_and_release]
+  position:
+    type: string
+    description: 目标按钮位置标识，LLM从用户指令中提取，例如 "1F_up"、"B1"、"15F_down"
+    required: true
+  force:
+    type: number
+    description: 按压力度（N），仅在机械臂支持力控时生效，缺省时使用安全默认值
+    required: false
+  duration:
+    type: number
+    description: 按下保持时长（秒），仅对 press 和 press_and_release 有效，缺省为安全值
+    required: false
+
+ros:
+  topics:
+    - name: /arm/elevator/command
+      type: std_msgs/String
+      direction: publish
+    - name: /arm/elevator/status
+      type: std_msgs/String
+      direction: subscribe
+
+timeout: 20.0

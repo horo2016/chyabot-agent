@@ -1,0 +1,97 @@
+name: goal_recorder
+version: 1.0.0
+description: 目标点采集系统：监听定位Odometry，语音指令记录并保存目标点位置
+author: reeman
+tags: [navigation, goal, recorder, waypoint]
+persistent: true  # 标记为常驻后台
+
+parameters:
+  save_path:
+    type: string
+    description: 目标点保存文件路径（JSON格式）
+    required: false
+    default: ~/goals.json
+
+  odom_topic:
+    type: string
+    description: 定位 Odometry 话题名
+    required: false
+    default: /localization_odom
+
+  input_topic:
+    type: string
+    description: 语音输入话题名，接收识别后的文本指令
+    required: false
+    default: /agent/input
+
+  min_record_interval:
+    type: number
+    description: 两次记录最小间隔（秒），防止误触发重复记录
+    required: false
+    default: 2.0
+
+  position_tolerance:
+    type: number
+    description: 位置去重容差（米），小于此距离视为同一位置
+    required: false
+    default: 0.05
+
+  yaw_tolerance:
+    type: number
+    description: 角度去重容差（弧度），约5度
+    required: false
+    default: 0.087
+
+  auto_save:
+    type: boolean
+    description: 是否自动保存到文件
+    required: false
+    default: true
+
+  keywords:
+    type: list
+    description: 记录指令关键词列表，语音中包含任一关键词触发记录
+    required: false
+    default: ["记录", "保存", "标记", "采集"]
+
+  delete_keywords:
+    type: list
+    description: 删除指令关键词列表
+    required: false
+    default: ["删除", "移除"]
+
+  list_keywords:
+    type: list
+    description: 列表指令关键词列表
+    required: false
+    default: ["列出", "查看", "列表"]
+
+ros:
+  topics:
+    - name: /localization_odom
+      type: nav_msgs/Odometry
+      direction: subscribe
+      description: 定位Odometry输入
+
+    - name: /agent/input
+      type: std_msgs/String
+      direction: subscribe
+      description: 语音/文本指令输入
+
+    - name: /goal_recorder/status
+      type: std_msgs/String
+      direction: publish
+      description: 操作状态反馈（JSON格式）
+
+    - name: /goal_recorder/result
+      type: std_msgs/String
+      direction: publish
+      description: 操作结果（JSON格式，包含完整位姿数据）
+
+dependencies:
+  pip: []
+  ros: [std_msgs, nav_msgs]
+  system: []
+
+timeout: 0
+# 注意：timeout=0 表示常驻后台，不超时

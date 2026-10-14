@@ -1,0 +1,19 @@
+name: navigate
+version: 1.0.0
+description: 移动到指定位置，如楼层、房间、电梯口等移动到地图标记的目标位置（从 map.markers.json 动态加载）
+author: reeman
+tags: [navigation, move]
+
+parameters:
+  target:
+    type: string
+    description: 目标位置名称
+    required: true
+
+ros:
+  topics:
+    - name: /goal_point
+      type: geometry_msgs/PoseStamped
+      direction: publish
+
+timeout: 30.0

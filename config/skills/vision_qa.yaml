@@ -1,0 +1,32 @@
+name: vision_qa
+version: 1.0.0
+description: 视觉问答：获取USB摄像头图像，调用多模态大模型回答视觉问题，如你看到了什么、物体颜色、人物穿着等。LVM配置独立读取 choya config get lvm，与 llm 互不冲突
+author: reeman
+tags: [vision, vlm, camera, qa, multimodal, lvm]
+
+parameters:
+  question:
+    type: string
+    description: 视觉问题，如'你看到了什么'、'这个人穿的什么颜色的上衣'、'前方有什么障碍物'
+    required: true
+  api_key:
+    type: string
+    description: 临时覆盖 LVM API Key（默认自动读取 choya config get lvm）
+    required: false
+    default: ""
+  model:
+    type: string
+    description: 临时覆盖视觉模型名称（默认自动读取 choya config get lvm，建议 moonshot-v1-8k-vision-preview / gpt-4o / qwen-vl-max）
+    required: false
+    default: ""
+
+ros:
+  topics:
+    - name: /usb_camera/image_raw
+      type: sensor_msgs/Image
+      direction: subscribe
+    - name: /vision/answer
+      type: std_msgs/String
+      direction: publish
+
+timeout: 35.0

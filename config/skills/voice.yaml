@@ -1,0 +1,61 @@
+name: voice
+version: 1.0.0
+description: 语音交互系统：Porcupine唤醒词检测、Faster-Whisper语音识别、pyttsx3语音合成
+author: reeman
+tags: [voice, audio, asr, tts]
+persistent: true  # 标记为常驻后台
+
+parameters:
+  wake_word:
+    type: enum
+    enum: [terminator, computer, bumblebee]
+    description: 唤醒词
+    required: false
+    default: computer
+    
+  model_path:
+    type: string
+    description: Whisper本地模型路径
+    required: false
+    default: ~/whisper-models/tiny
+    
+  audio_device:
+    type: number
+    description: 音频设备索引，None表示默认设备
+    required: false
+    default: 0 
+    
+  energy_threshold:
+    type: number
+    description: VAD能量阈值
+    required: false
+    default: 500
+  voice:
+    wake_word: "computer"
+    tts_engine: "edge-tts"          # 切换为在线引擎
+    edge_voice: "zh-CN-XiaoxiaoNeural"  # 可选：zh-CN-YunxiNeural(男声) 等
+
+ros:
+  topics:
+    - name: /agent/input
+      type: std_msgs/String
+      direction: publish
+      description: 识别结果发送给Agent
+      
+    - name: /voice/tts_text
+      type: std_msgs/String
+      direction: subscribe
+      description: 接收TTS播报指令
+      
+    - name: /voice/status
+      type: std_msgs/String
+      direction: publish
+      description: 语音状态
+
+dependencies:
+  pip: [sounddevice, pvporcupine==1.9.5, faster-whisper, pyttsx3, numpy]
+  ros: [std_msgs]
+  system: [portaudio19-dev, espeak]
+
+timeout: 0
+# 注意：timeout=0 表示常驻后台，不超时

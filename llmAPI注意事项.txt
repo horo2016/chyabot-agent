@@ -1,0 +1,3 @@
+使用kimi的API 要把所有的 tempreture的参数注释掉，包括
+skills  core 下plan.py 下的。可使用  grep  -rn "tempreture" 搜索查找。
+使用 deepseek的话，要把tempreture参数打开。
