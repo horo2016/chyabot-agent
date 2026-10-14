@@ -144,7 +144,7 @@ sudo apt install -y     python3-pip     python3-dev     portaudio19-dev     espe
 
 # 2. 克隆项目
 cd ~
-git clone https://github.com/reeman/choyabot-agent-framework.git
+git clone https://github.com/horo2016/choyabot-agent-framework.git
 cd choyabot-agent-framework
 
 # 3. 安装 Python 依赖
@@ -239,8 +239,8 @@ choya init
    🖥️ 本地 (Ollama) | URL: http://localhost:11434/v1/chat/completions | 模型: qwen2.5:7b | Key: 未设置
 
 ✅ 初始化完成
-   技能目录: /home/reeman/choyabot-agent-framework/skills
-   配置目录: /home/reeman/choyabot-agent-framework/config/skills
+   技能目录: /home/horo2016/choyabot-agent-framework/skills
+   配置目录: /home/horo2016/choyabot-agent-framework/config/skills
 ```
 
 ### 4.2 查看和管理技能
@@ -732,7 +732,7 @@ from typing import Tuple, Optional, Dict, List
 
 > **文档版本**: v1.0.0
 > **最后更新**: 2026-05-13
-> **项目地址**: https://github.com/reeman/choyabot-agent-framework
+> **项目地址**: https://github.com/horo2016/choyabot-agent-framework
 
 
 
